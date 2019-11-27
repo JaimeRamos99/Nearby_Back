@@ -19,6 +19,7 @@ console.log('server started on port 3001');
 firebase.initializeApp(firebaseConfig);
 router.get('/', async function(req,res){
 console.log("hello, you have connected to nearby launching estrategy server")
+res.json("hello, you have connected to nearby launching estrategy server")
 })
 router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
