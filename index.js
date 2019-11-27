@@ -23,7 +23,6 @@ router.get('/', async function (req, res) {
 })
 router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
-    console.log(firebaseConfig)
     let flag = false
     let email = req.params.email
     let password = req.params.password
