@@ -11,8 +11,8 @@ app.use(bodyParser.json())
 app.use(router)
 console.log('server started on port 3001');
 firebase.initializeApp(firebaseConfig);
-router.post('/createUserEmailPassword/:email/:password/:nombre', async function (req, res) {
-    console.log("se conectaron")
+router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async function (req, res) {
+    console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
     let email = req.params.email
     let password = req.params.password
     let nombre = req.params.nombre
@@ -31,4 +31,16 @@ router.post('/createUserEmailPassword/:email/:password/:nombre', async function 
         console.error(err)
     })
     res.json("Done!")
+})
+router.get('/login/:email/:password', async function (req, res) {
+    console.log("se conectaron a /login/email/password")
+    let email = req.params.email
+    let password = req.params.password
+    firebase.auth().signInWithEmailAndPassword(email, password).then(result => {//la contraseña si se guarda de algún extraño modo XD
+        if (result.user.emailVerified) {
+            res.json("ingreso exitoso!")
+        } else {
+            res.json("no se ha verificado la cuenta.")
+        }
+    })
 })
