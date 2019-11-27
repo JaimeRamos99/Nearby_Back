@@ -4,6 +4,8 @@ class Mongohandler {
     constructor() {
         this.client = new MongoClient(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true });
         this.dbName = process.env.DB
+        console.log(process.env.MONGO)
+        console.log(process.env.DB)
     }
     connect() {
         return new Promise((resolve, reject) => {
