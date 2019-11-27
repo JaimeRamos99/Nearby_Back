@@ -8,9 +8,10 @@ const bcrypt = require('bcrypt')
 const cors = require("cors");
 const corsOptions = { origin: "http://localhost:3000" };
 const mongohandler = require('./Mongolib')
+const PORT=process.env.PORT || 3000
 require("firebase/auth");
 require("firebase/firestore");
-app.listen(3001);
+app.listen(PORT);
 app.use(bodyParser.json())
 app.use(cors(corsOptions));
 app.use(router)
