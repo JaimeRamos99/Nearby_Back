@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt')
 const cors = require("cors");
 const corsOptions = { origin: "http://localhost:3000" };
 const mongohandler = require('./Mongolib')
-const PORT=process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 require("firebase/auth");
 require("firebase/firestore");
 app.listen(PORT);
@@ -17,12 +17,13 @@ app.use(cors(corsOptions));
 app.use(router)
 console.log('server started on port 3001');
 firebase.initializeApp(firebaseConfig);
-router.get('/', async function(req,res){
-console.log("hello, you have connected to nearby launching estrategy server")
-res.json("hello, you have connected to nearby launching estrategy server")
+router.get('/', async function (req, res) {
+    console.log("hello, you have connected to nearby launching estrategy server")
+    res.json("hello, you have connected to nearby launching estrategy server")
 })
 router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
+    console.log(firebaseConfig)
     let flag = false
     let email = req.params.email
     let password = req.params.password
@@ -47,7 +48,7 @@ router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async 
         console.error("2:" + err)
         res.json(err)
     })
-    
+
     if (!flag) {
         await mongohandler.nuevoUsuario(nombre, email, user, hashedpassword)
         res.json("Done!")
