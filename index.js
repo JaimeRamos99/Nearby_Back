@@ -34,7 +34,7 @@ router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async 
             displayName: nombre
         })
         const configuracion = {
-            url: 'http://localhost:3001/'
+            url: 'http://nearby.com.co/bienvenido'
         }
         result.user.sendEmailVerification(configuracion).catch(err => {
             res.json("1")
