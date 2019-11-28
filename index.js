@@ -6,7 +6,7 @@ const firebaseConfig = require('./Config')
 const firebase = require("firebase/app");
 const bcrypt = require('bcrypt')
 const cors = require("cors");
-const corsOptions = { origin: "http://localhost:3000" };
+const corsOptions = { origin: "https://nearby.com.co" };
 const mongohandler = require('./Mongolib')
 const PORT = process.env.PORT || 3000
 require("firebase/auth");
