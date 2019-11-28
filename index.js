@@ -6,7 +6,7 @@ const firebaseConfig = require('./Config')
 const firebase = require("firebase/app");
 const bcrypt = require('bcrypt')
 const cors = require("cors");
-const corsOptions = { origin: "https://nearby.com.co" };
+const corsOptions = { origin: "https://nearby.com.co/" };
 const mongohandler = require('./Mongolib')
 const PORT = process.env.PORT || 3000
 require("firebase/auth");
@@ -37,7 +37,6 @@ router.post('/createUserEmailPassword/:nombre/:email/:usuario/:password', async 
             url: 'http://nearby.com.co/bienvenido'
         }
         result.user.sendEmailVerification(configuracion).catch(err => {
-            res.json("1")
             console.log("1:" + err)
             flag = true
         })
