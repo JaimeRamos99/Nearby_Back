@@ -18,9 +18,9 @@ class Mongohandler {
             })
         })
     }
-    async nuevoUsuario(name, email, user, pass) {
+    async nuevoUsuario(name, email, pass) {
         return this.connect().then(db => {
-            return db.collection('users').insertOne({ nombre: name, correo: email, usuario: user, contraseña: pass });
+            return db.collection('users').insertOne({ nombre: name, correo: email, contraseña: pass });
         })
     }
 }
