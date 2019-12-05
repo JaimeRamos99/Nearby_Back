@@ -21,13 +21,15 @@ router.get('/', async function (req, res) {
     console.log("hello, you have connected to nearby launching estrategy server")
     res.json("hello, you have connected to nearby launching estrategy server")
 })
-router.post('/createUserEmailPassword/:nombre/:email/:password', async function (req, res) {
+router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
     let flag = false
     let email = req.params.email
     let password = req.params.password
     const hashedpassword = await bcrypt.hash(password, 10)
     let nombre = req.params.nombre
+    let sex = req.params.sex
+    let edad = req.params.edad
     await firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
         result.user.updateProfile({
             displayName: nombre
@@ -47,10 +49,9 @@ router.post('/createUserEmailPassword/:nombre/:email/:password', async function 
     })
 
     if (!flag) {
-        await mongohandler.nuevoUsuario(nombre, email, hashedpassword)
+        await mongohandler.nuevoUsuario(nombre, email, hashedpassword, sex, edad)
         res.json("Done!")
     }
-
 })
 router.get('/login/:email/:password', async function (req, res) {
     console.log("se conectaron a /login/email/password")
