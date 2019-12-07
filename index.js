@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt')
 const cors = require("cors");
 const mongohandler = require('./Mongolib')
 const PORT = process.env.PORT || 3000
-var whitelist = ['https://nearby.com.co', 'https://www.nearby.com.co/']
+var whitelist = ['https://nearby.com.co', 'https://www.nearby.com.co']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
