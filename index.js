@@ -6,9 +6,18 @@ const firebaseConfig = require('./Config')
 const firebase = require("firebase/app");
 const bcrypt = require('bcrypt')
 const cors = require("cors");
-const corsOptions = { origin: "https://nearby.com.co" };
 const mongohandler = require('./Mongolib')
 const PORT = process.env.PORT || 3000
+var whitelist = ['https://nearby.com.co', 'https://www.nearby.com.co/']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 require("firebase/auth");
 require("firebase/firestore");
 app.listen(PORT);
