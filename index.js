@@ -30,7 +30,7 @@ router.get('/', async function (req, res) {
     console.log("hello, you have connected to nearby launching estrategy server")
     res.json("hello, you have connected to nearby launching estrategy server")
 })
-router.get('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
+router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
     let flag = false
     let email = req.params.email
