@@ -24,13 +24,13 @@ app.listen(PORT);
 app.use(bodyParser.json())
 app.use(cors(corsOptions));
 app.use(router)
-console.log('server started on port 3001');
+console.log('server started on port 3000');
 firebase.initializeApp(firebaseConfig);
 router.get('/', async function (req, res) {
     console.log("hello, you have connected to nearby launching estrategy server")
     res.json("hello, you have connected to nearby launching estrategy server")
 })
-router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
+router.get('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
     let flag = false
     let email = req.params.email
