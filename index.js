@@ -7,16 +7,16 @@ const firebase = require("firebase/app");
 const bcrypt = require('bcrypt')
 const cors = require("cors");
 const mongohandler = require('./Mongolib')
-const PORT = process.env.PORT || 3000
-var whitelist = ['https://nearby.com.co', 'https://www.nearby.com.co']
+const PORT = process.env.PORT || 3001
+var whitelist = ['https://nearby.com.co', 'https://www.nearby.com.co', 'http://localhost:3000']
 var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback('Not allowed by CORS')
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback('Not allowed by CORS')
+        }
     }
-  }
 }
 require("firebase/auth");
 require("firebase/firestore");
@@ -24,13 +24,13 @@ app.listen(PORT);
 app.use(bodyParser.json())
 app.use(cors(corsOptions));
 app.use(router)
-console.log('server started on port 3000');
+console.log('server started on port ' + PORT);
 firebase.initializeApp(firebaseConfig);
 router.get('/', async function (req, res) {
     console.log("hello, you have connected to nearby launching estrategy server")
     res.json("hello, you have connected to nearby launching estrategy server")
 })
-router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', async function (req, res) {
+router.post('/createUserEmailPassword/:nombre/:email/:password', async function (req, res) {
     console.log("se conectaron a /createUserEmailPassword/:nombre/:email/:usuario/:password")
     let flag = false
     let email = req.params.email
@@ -44,7 +44,7 @@ router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', asyn
             displayName: nombre
         })
         const configuracion = {
-            url: 'https://nearby.com.co/bienvenido'
+            url: 'http://localhost:3000/bienvenido'
         }
         result.user.sendEmailVerification(configuracion).catch(err => {
             console.log("1:" + err)
@@ -58,19 +58,21 @@ router.post('/createUserEmailPassword/:nombre/:email/:password/:sex/:edad', asyn
     })
 
     if (!flag) {
-        await mongohandler.nuevoUsuario(nombre, email, hashedpassword, sex, edad)
+        //await mongohandler.nuevoUsuario(nombre, email, hashedpassword)
         res.json("Done!")
     }
 })
-router.get('/login/:email/:password', async function (req, res) {
+router.post('/login/:email/:password', async function (req, res) {
     console.log("se conectaron a /login/email/password")
     let email = req.params.email
     let password = req.params.password
     firebase.auth().signInWithEmailAndPassword(email, password).then(result => {//la contraseña si se guarda de algún extraño modo XD para cuando vaya a dar sign in
         if (result.user.emailVerified) {
+            console.log("si")
             res.json("ingreso exitoso!")
         } else {
-            res.json("no se ha verificado la cuenta.")
+            console.log("no")
+            res.json("no se ha verificado la cuenta o no se ha registrado.")
         }
     })
 })
