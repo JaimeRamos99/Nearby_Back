@@ -8,11 +8,23 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 const mongohandler = require("./Mongolib");
 const PORT = 3001;
+
 var whitelist = ["http://localhost:3000"];
+var corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback("Not allowed by CORS");
+    }
+  }
+};
+
 require("firebase/auth");
 require("firebase/firestore");
 app.listen(PORT);
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 app.use(router);
 console.log("server started on port " + PORT);
 firebase.initializeApp(firebaseConfig);
@@ -72,10 +84,16 @@ router.post("/login/:email/:password", async function(req, res) {
       //la contraseña si se guarda de algún extraño modo XD para cuando vaya a dar sign in
       if (result.user.emailVerified) {
         console.log("si");
-        res.json("ingreso exitoso!");
+        res.send({ error: false, status: 200 });
       } else {
         console.log("no");
-        res.json("no se ha verificado la cuenta o no se ha registrado.");
+
+        res
+          .status(401)
+          .send({ error: true, stauts: 401, body: "unathorized2" });
       }
+    })
+    .catch(err => {
+      res.status(401).send({ error: true, stauts: 401, body: "unathorized1" });
     });
 });
