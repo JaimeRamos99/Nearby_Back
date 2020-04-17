@@ -11,7 +11,7 @@ const PORT = 3001;
 
 var whitelist = ["http://localhost:3000"];
 var corsOptions = {
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -28,11 +28,11 @@ app.use(cors(corsOptions));
 app.use(router);
 console.log("server started on port " + PORT);
 firebase.initializeApp(firebaseConfig);
-router.get("/", async function(req, res) {
+router.get("/", async function (req, res) {
   console.log("hello, you have connected to nearby launching estrategy server");
   res.json("hello, you have connected to nearby launching estrategy server");
 });
-router.post("/createUserEmailPassword/:nombre/:email/:password", async function(
+router.post("/createUserEmailPassword/:nombre/:email/:password", async function (
   req,
   res
 ) {
@@ -73,7 +73,7 @@ router.post("/createUserEmailPassword/:nombre/:email/:password", async function(
     res.json("Done!");
   }
 });
-router.post("/login/:email/:password", async function(req, res) {
+router.post("/login/:email/:password", async function (req, res) {
   console.log("se conectaron a /login/email/password");
   let email = req.params.email;
   let password = req.params.password;
@@ -83,11 +83,8 @@ router.post("/login/:email/:password", async function(req, res) {
     .then(result => {
       //la contraseña si se guarda de algún extraño modo XD para cuando vaya a dar sign in
       if (result.user.emailVerified) {
-        console.log("si");
         res.send({ error: false, status: 200 });
       } else {
-        console.log("no");
-
         res
           .status(401)
           .send({ error: true, stauts: 401, body: "unathorized2" });
